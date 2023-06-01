@@ -10,10 +10,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Entity
 @Component
 @Data
-public class Faculty {
+@Entity
+public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -24,8 +24,6 @@ public class Faculty {
 	private Date dob;
 	private boolean status;
 	private String gender;
-	private int experience;
-	private String subject;
-	private String education;
 	private String password;
+	private String designation;
 }

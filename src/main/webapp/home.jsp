@@ -186,7 +186,7 @@ rotate(
 	<main class="main-content">
 		<a href="/admin_login.jsp"><button>Click here to login as Admin</button></a> <br>
 		<a href="/studentlogin.jsp"><button >Click here to login as Student</button></a><br>
-		<a href="/facultylogin.jsp"><button >Click here to login as Faculty</button></a><br>
+		<a href="/FacultyLogin.jsp"><button >Click here to login as Faculty</button></a><br>
 		<a href="/non_staff_login.jsp"><button >Click here to login as non_staff login</button></a>
 		
 		<div class="advanced-graphic"></div>
