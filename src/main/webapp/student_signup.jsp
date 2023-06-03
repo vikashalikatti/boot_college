@@ -6,15 +6,27 @@
 <meta charset="ISO-8859-1">
 <title>Student Signup</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
 body {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    background: linear-gradient(45deg, #8EC5FC, #E0C3FC);
+    animation: gradient 6s ease infinite;
+}
+
+@keyframes gradient {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
 .container {
@@ -22,6 +34,7 @@ body {
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.1);
+    animation: zoomIn 1s ease;
 }
 
 h1 {
@@ -37,6 +50,7 @@ label {
 .gender {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 8px;
 }
 
@@ -68,6 +82,7 @@ button[type="reset"], button {
 
 button[type="reset"]:hover, button:hover {
     background-color: #45a049;
+    transform: scale(1.05);
 }
 
 @keyframes colorchange {
@@ -75,6 +90,11 @@ button[type="reset"]:hover, button:hover {
     25%  {color: green;}
     50%  {color: red;}
     100% {color: yellow;}
+}
+
+@keyframes zoomIn {
+    0% {transform: scale(0);}
+    100% {transform: scale(1);}
 }
 </style>
 </head>
@@ -84,7 +104,7 @@ button[type="reset"]:hover, button:hover {
 <h1>${fail}</h1>
 <form action="/student/signup" method="post">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name"> 
+    <input type="text" id="name" name="name">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email">
     <label for="mobile">Mobile:</label>

@@ -78,5 +78,5 @@ public class Course_service {
         List<Course> courses = course_dao.fetch();
         andView.addObject("courses", courses);
         return andView;
-	}
+	}	
 }

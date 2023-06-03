@@ -1,15 +1,11 @@
 package org.jsp.college.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.jsp.college.dao.Course_dao;
-import org.jsp.college.dto.Course;
 import org.jsp.college.dto.Stream_dto;
 import org.jsp.college.dto.Student;
 import org.jsp.college.helper.Login;
-import org.jsp.college.service.Course_service;
 import org.jsp.college.service.Student_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

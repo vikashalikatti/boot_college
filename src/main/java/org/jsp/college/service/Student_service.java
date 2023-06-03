@@ -50,15 +50,15 @@ public class Student_service {
 		ModelAndView view = new ModelAndView();
 		Student student = student_dao.fetch(login.getEmail());
 		if (student == null) {
-			view.setViewName("StudentLogin");
+			view.setViewName("studentlogin");
 			view.addObject("fail", "Email Wrong");
 		} else {
 			if (login.getPassword().equals(student.getPassword())) {
-				session.setAttribute("student", "student");
+				session.setAttribute("student", student);
 				view.setViewName("StudentHome");
 				view.addObject("success", "Login Success");
 			} else {
-				view.setViewName("StudentLogin");
+				view.setViewName("studentlogin");
 				view.addObject("fail", "Password Wrong");
 			}
 		}
