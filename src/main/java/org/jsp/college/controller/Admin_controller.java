@@ -5,6 +5,7 @@ import org.jsp.college.dto.Stream_dto;
 import org.jsp.college.helper.Login;
 import org.jsp.college.service.Admin_service;
 import org.jsp.college.service.Course_service;
+import org.jsp.college.service.Student_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,8 @@ public class Admin_controller {
 	Admin_service admin_service;
 	@Autowired
 	Course_service course_service;
+	@Autowired
+	Student_service student_service;
 
 	@PostMapping("login")
 	public ModelAndView login(@ModelAttribute Login login, HttpSession session) {
@@ -49,6 +52,10 @@ public class Admin_controller {
 	{
 		return course_service.update_fee_course();
 	}
-	
+	@GetMapping("admission")
+	public ModelAndView admission()
+	{
+		return student_service.fetchAllAcceptedStudent();
+	}
 	
 }

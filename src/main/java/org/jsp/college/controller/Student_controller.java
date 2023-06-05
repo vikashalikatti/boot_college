@@ -49,4 +49,27 @@ public class Student_controller {
 	public List<Stream_dto> fetchstreambycourse(@PathVariable int courseId) {
 		return student_service.fetchstreambycourse(courseId);
 	}
+
+	@PostMapping("enroll")
+	public ModelAndView enroll(@RequestParam String course, @RequestParam String stream, HttpSession session) {
+		return student_service.enroll(course, stream, session);
+	}
+
+	@GetMapping("accept")
+	public ModelAndView accept(HttpSession session)
+	{
+		return student_service.accept(session);
+	}
+	
+	@GetMapping("reject")
+	public ModelAndView reject(HttpSession session)
+	{
+		return student_service.reject(session);
+	}
+	
+	@GetMapping("approve/{id}")
+	public ModelAndView approve(@PathVariable int id)
+	{
+		return student_service.approveStudent(id);
+	}
 }

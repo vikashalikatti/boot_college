@@ -46,6 +46,8 @@ public class Course_service {
 	public ModelAndView save_stream(Stream_dto stream_dto, String coursename) {
 
 		ModelAndView andView = new ModelAndView();
+		stream_dto.setNseat(stream_dto.getSeat()-((stream_dto.getSeat()*30)/100));
+		stream_dto.setMseat(stream_dto.getSeat()-stream_dto.getNseat());
 		Course course = course_dao.fetch(coursename);
 		List<Stream_dto> streams = course.getStream();
 		if (streams == null) {

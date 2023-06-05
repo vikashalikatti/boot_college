@@ -82,7 +82,7 @@
   } else {
   %>
   <h2 class="welcome">Welcome, <%=student.getName()%>!</h2>
-  <%if (student.getStream() == null) {
+  <%if (!student.isStatus()) {
   %>
 
   <a href="/student/course" class="btn animate__animated animate__swing">Enroll For Course</a>

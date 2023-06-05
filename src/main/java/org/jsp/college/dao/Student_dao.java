@@ -1,10 +1,8 @@
 package org.jsp.college.dao;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import org.jsp.college.dto.Course;
-import org.jsp.college.dto.Stream_dto;
 import org.jsp.college.dto.Student;
 import org.jsp.college.repository.Student_repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,8 @@ public class Student_dao {
 	@PersistenceContext
 	private EntityManager em;
 
-	public void save(Student student) {
-		student_repository.save(student);
+	public Student save(Student student) {
+		return student_repository.save(student);
 
 	}
 
@@ -34,5 +32,17 @@ public class Student_dao {
 		return student_repository.findByEmail(email);
 	}
 
-	
+	public List<Student> fetchAllApprovedStudents() {
+		return student_repository.fetchAllApprovedStudents();
+	}
+
+	public Student fetch(int id) {
+		Optional<Student> optional = student_repository.findById(id);
+		if (optional.isPresent())
+			return optional.get();
+		else {
+			return null;
+		}
+	}
+
 }

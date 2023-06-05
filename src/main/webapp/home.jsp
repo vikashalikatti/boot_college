@@ -3,7 +3,6 @@
 <%@page import="org.jsp.college.dao.Course_dao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +12,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 0 0 100px 0; /* Add padding bottom equivalent to or more than the footer's height */
     box-sizing: border-box;
     background-color: #f2f2f2;
     display: flex;
@@ -108,6 +107,7 @@ button:hover {
 
 .contact {
     margin: 20px;
+    margin-bottom: 80px; /* Increase this value if you need more space */
     animation: contactfade 3s;
     background: #333;
     color: white;
@@ -167,11 +167,6 @@ if (session.getAttribute("admin") == null) {
     <p>Stay updated with our latest news here.</p>
 </div>
 
-<div class="contact">
-    <h2>Contact Us</h2>
-    <p>Email: college@email.com</p>
-    <p>Phone: 123-456-7890</p>
-</div>
 
 <%
 } else {
@@ -187,6 +182,7 @@ session.removeAttribute("message");
 <a href="/Add_course.jsp"><button>add course</button></a>
 <a href="/admin/stream"><button>add stream</button></a>
 <a href="/admin/update"><button>Update fee for course</button></a>
+<a href="/admin/admission"><button>Approve Admission</button></a>
 <a href="/logout"><button>Logout</button></a>
 
 <%
