@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,26 +37,36 @@ public class Admin_controller {
 	public ModelAndView add_course(@ModelAttribute Course course) {
 		return course_service.add_course(course);
 	}
-	
+
 	@GetMapping("stream")
 	public ModelAndView checkStream() {
 		return course_service.check_course();
 	}
-	
+
 	@PostMapping("stream")
-	public ModelAndView savestream(@ModelAttribute Stream_dto stream_dto,@RequestParam String coursename) {
+	public ModelAndView savestream(@ModelAttribute Stream_dto stream_dto, @RequestParam String coursename) {
 		return course_service.save_stream(stream_dto, coursename);
-		
+
 	}
-	@GetMapping("update")
-	public ModelAndView update_fee_course()
-	{
-		return course_service.update_fee_course();
-	}
+
 	@GetMapping("admission")
-	public ModelAndView admission()
-	{
+	public ModelAndView admission() {
 		return student_service.fetchAllAcceptedStudent();
 	}
-	
+
+	@PostMapping("updateFee/{id}")
+	public ModelAndView update_course(@PathVariable int id, @RequestParam double fee) {
+		return course_service.update_course(id, fee);
+	}
+
+	@GetMapping("update_stream")
+	public ModelAndView update_stream_fee(HttpSession session) {
+		return course_service.fetchAll_stream(session);
+	}
+
+	@PostMapping("/updateFeestream/{id}")
+	public ModelAndView updateStreamFee(@PathVariable int id, @RequestParam double fee, HttpSession session) {
+		return course_service.update_stream(id, fee, session);
+	}
+
 }

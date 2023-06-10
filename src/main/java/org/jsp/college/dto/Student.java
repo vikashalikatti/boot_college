@@ -5,10 +5,12 @@ import java.sql.Date;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
@@ -31,6 +33,10 @@ public class Student {
 	private double sslc;
 	private double puc;
 	private String quota;
+
+	@Lob
+	@Column(columnDefinition = "MEDIUMBLOB")
+	private byte[] picture;
 
 	@ManyToOne
 	private Course course;

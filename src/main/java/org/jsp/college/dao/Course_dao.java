@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.jsp.college.dto.Course;
+import org.jsp.college.dto.Faculty;
 import org.jsp.college.dto.Stream_dto;
 import org.jsp.college.repository.Course_repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class Course_dao {
 		return course_repository.findByName(name);
 	}
 
-	public List<Course> fetch() {
+	public List<Course> fetchall() {
 		return course_repository.findAll();
 	}
 
@@ -46,9 +47,12 @@ public class Course_dao {
 		}
 	}
 
-	public Optional<Course> findById(int courseId) {
-		// TODO Auto-generated method stub
-		return course_repository.findById(courseId);
+	public Course fetchById(int id) {
+		Optional<Course> op = course_repository.findById(id);
+		if (op.isEmpty())
+			return null;
+		else
+			return op.get();
 	}
 
 }

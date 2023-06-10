@@ -1,5 +1,8 @@
 package org.jsp.college.dao;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.jsp.college.dto.Staff;
 import org.jsp.college.repository.Staff_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +25,15 @@ public class Staff_Dao {
 		return StaffRepository.findByMobile(mobile);
 	}
 
+	public List<Staff> findall() {
+		return StaffRepository.findAll();
+	}
+
+	public Staff fetchById(int id) {
+		Optional<Staff> op = StaffRepository.findById(id);
+		if (op.isEmpty())
+			return null;
+		else
+			return op.get();
+	}
 }

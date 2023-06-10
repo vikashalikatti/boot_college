@@ -1,4 +1,4 @@
-package org.jsp.college.dto;
+	package org.jsp.college.dto;
 
 import java.util.List;
 

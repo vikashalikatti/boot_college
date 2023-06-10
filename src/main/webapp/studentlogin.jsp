@@ -114,7 +114,7 @@ body {
 		</div>
 	</form>
 	<br>
-	<a href="student_signup.jsp">New? click here to create an account</a>
+	<a href="/student_signup.jsp">New? click here to create an account</a>
 	<div class="form-group">
 	<a href="/"><button>Home</button></a>
 	</div>

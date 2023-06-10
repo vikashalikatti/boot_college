@@ -16,9 +16,10 @@ public class Main_Controller {
 	}
 
 	@GetMapping("logout")
-	public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+	public ModelAndView logout(HttpSession session,ModelAndView andView) {
 		session.invalidate();
-		redirectAttributes.addFlashAttribute("message", "You have successfully logged out.");
-		return "home";
+		andView.addObject("success", "You have successfully logged out.");
+		andView.setViewName("home");
+		return andView;
 	}
 }
