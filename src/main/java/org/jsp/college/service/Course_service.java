@@ -95,20 +95,6 @@ public class Course_service {
 		return andView;
 	}
 
-	public ModelAndView fetchAll_course1(HttpSession session) {
-		ModelAndView view = new ModelAndView();
-		List<Course> list = course_dao.fetchall();
-		System.out.println(list);
-		if (list.isEmpty()) {
-			view.addObject("fail", "No Course fee to update");
-			view.setViewName("Admin_Home");
-		} else {
-			view.addObject("list", list);
-			session.setAttribute("list", list);
-			view.setViewName("update_fee_course");
-		}
-		return view;
-	}
 
 	public ModelAndView update_course(@PathVariable int id, @RequestParam double fee) {
 		ModelAndView view = new ModelAndView();
