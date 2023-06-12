@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
 <meta charset="ISO-8859-1">
 <title>Update Fee For Course</title>
 </head>

@@ -11,6 +11,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
 <title>Faculty ID</title>
 <style>
 body {

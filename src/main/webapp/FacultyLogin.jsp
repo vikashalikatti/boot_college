@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Faculty Login</title>
+<link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
 <style>
 body, html {
     height: 100%;

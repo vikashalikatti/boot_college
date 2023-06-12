@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Staff Login</title>
+<link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
 </head>
 <body>
 <h1 style="color:green">${success}</h1>

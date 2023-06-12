@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Staff Signup</title>
+<link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
 <script>
     function validateFileSize(input) {
         if (input.files[0].size > 200 * 1024) {

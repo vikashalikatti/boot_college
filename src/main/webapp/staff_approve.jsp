@@ -7,6 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Approve Staff</title>
+<link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
 </head>
 <body>
 	<%

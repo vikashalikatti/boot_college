@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Admin Login</title>
+<link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
 
 <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
