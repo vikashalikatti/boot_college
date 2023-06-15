@@ -33,7 +33,7 @@ public class Student_controller {
 
 	@PostMapping("signup")
 	public ModelAndView signup(@ModelAttribute Student student, @RequestParam String date,
-			@RequestParam("photo") MultipartFile photo) throws IOException {
+			@RequestParam MultipartFile photo) throws IOException {
 		return student_service.signup(student, date,photo);
 	}
 

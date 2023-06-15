@@ -26,7 +26,7 @@ public class Staff_controller {
 
 	@PostMapping("signup")
 	public ModelAndView signup(@ModelAttribute Staff Staff, @RequestParam String date,
-			@RequestParam("photo") MultipartFile photo) throws IOException {
+			@RequestParam MultipartFile photo) throws IOException {
 		return StaffService.signup(Staff, date, photo);
 	}
 

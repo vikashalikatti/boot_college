@@ -15,6 +15,7 @@ import org.jsp.college.dto.Course;
 import org.jsp.college.dto.Stream_dto;
 import org.jsp.college.dto.Student;
 import org.jsp.college.helper.Login;
+import org.jsp.college.helper.SendMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,8 @@ public class Student_service {
 	Student_dao student_dao;
 	@Autowired
 	Course_dao courseDao;
+	@Autowired
+	SendMail mail;
 
 	public ModelAndView signup(Student student, String date, MultipartFile pic) throws IOException {
 		ModelAndView view = new ModelAndView();
@@ -63,6 +66,7 @@ public class Student_service {
 		} else {
 			if (login.getPassword().equals(student.getPassword())) {
 				session.setAttribute("student", student);
+				mail.send(student);
 				view.setViewName("StudentHome");
 				view.addObject("success", "Login Success");
 			} else {
@@ -88,7 +92,6 @@ public class Student_service {
 		return view;
 
 	}
-
 
 	public ModelAndView enroll(String course, String stream, HttpSession session) {
 		ModelAndView view = new ModelAndView();

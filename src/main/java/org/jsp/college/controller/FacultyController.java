@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @RequestMapping("faculty")
 public class FacultyController {
 	@Autowired
@@ -26,7 +27,7 @@ public class FacultyController {
 
 	@PostMapping("signup")
 	public ModelAndView signup(@ModelAttribute Faculty faculty, @RequestParam String date,
-			@RequestParam("photo") MultipartFile photo) throws IOException {
+			@RequestParam MultipartFile photo) throws IOException {
 		return facultyService.signup(faculty, date, photo);
 	}
 
@@ -44,6 +45,5 @@ public class FacultyController {
 	public ModelAndView changeStatus(@PathVariable int id) {
 		return facultyService.changeStatus(id);
 	}
-	
 	
 }
