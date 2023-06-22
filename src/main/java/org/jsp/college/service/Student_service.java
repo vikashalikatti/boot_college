@@ -5,16 +5,16 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.jsp.college.dao.Course_dao;
 import org.jsp.college.dao.Student_dao;
 import org.jsp.college.dto.Course;
+import org.jsp.college.dto.OtpDto;
 import org.jsp.college.dto.Stream_dto;
 import org.jsp.college.dto.Student;
 import org.jsp.college.helper.Login;
+import org.jsp.college.helper.OTPService;
 import org.jsp.college.helper.SendMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,33 +31,43 @@ public class Student_service {
 	Course_dao courseDao;
 	@Autowired
 	SendMail mail;
+	@Autowired
+	OTPService otp_service;
 
-	public ModelAndView signup(Student student, String date, MultipartFile pic) throws IOException {
+	public ModelAndView signup(Student student, String date, MultipartFile pic, int otp) throws IOException {
 		ModelAndView view = new ModelAndView();
-		if (student_dao.fetch(student.getEmail()) == null && student_dao.fetch(student.getMobile()) == null) {
+		String email = student.getEmail();
+		long mobile = student.getMobile();
+		if (student_dao.fetch(email) == null && student_dao.fetch(mobile) == null) {
 			Date dob = Date.valueOf(date);
 			student.setDob(dob);
 			int age = Period.between(dob.toLocalDate(), LocalDate.now()).getYears();
 			student.setAge(age);
-
-			byte[] picture = null;
-			if (pic != null) {
-				InputStream inputStream = pic.getInputStream();
-				picture = new byte[inputStream.available()];
-				inputStream.read(picture);
+			if (age > 18) {
+				byte[] picture = null;
+				if (pic != null && !pic.isEmpty()) {
+					InputStream inputStream = pic.getInputStream();
+					picture = inputStream.readAllBytes();
+				}
+				student.setPicture(picture);
+				student.setOtp(otp);
+				student_dao.save(student);
+				view.addObject("email", email);
+				view.setViewName("otp_verification");
+				view.addObject("success", "OTP sent to email. Please enter it to continue.");
+			} else {
+				view.setViewName("StudentSignup");
+				view.addObject("fail", "You should be 18+ to create an account");
 			}
-			student.setPicture(picture);
-			student_dao.save(student);
-			view.setViewName("home");
-			view.addObject("success", "Student Account created Success");
 		} else {
 			view.setViewName("StudentSignup");
-			view.addObject("fail", "Email or Phone already Exists");
+			view.addObject("fail", "Email or phone already exists");
 		}
+
 		return view;
 	}
 
-	public ModelAndView login(Login login, HttpSession session) {
+	public ModelAndView login(Login login, HttpSession session) throws IOException {
 		ModelAndView view = new ModelAndView();
 		Student student = student_dao.fetch(login.getEmail());
 		if (student == null) {
@@ -65,10 +75,15 @@ public class Student_service {
 			view.addObject("fail", "Email Wrong");
 		} else {
 			if (login.getPassword().equals(student.getPassword())) {
-				session.setAttribute("student", student);
-				mail.send(student);
-				view.setViewName("StudentHome");
-				view.addObject("success", "Login Success");
+				if (student.isOtpstatus()) {
+					session.setAttribute("student", student);
+//				mail.sendWelcomeMail(student);
+					view.setViewName("StudentHome");
+					view.addObject("success", "Login Success");
+				} else {
+					view.setViewName("studentlogin");
+					view.addObject("fail", "pleaze verify the email address");
+				}
 			} else {
 				view.setViewName("studentlogin");
 				view.addObject("fail", "Password Wrong");
@@ -185,7 +200,7 @@ public class Student_service {
 		ModelAndView view = new ModelAndView();
 		List<Student> list = student_dao.fetchAllApprovedStudents();
 		if (list.isEmpty()) {
-			view.setViewName("Admin__Home");
+			view.setViewName("Admin_Home");
 			view.addObject("fail", "Currently no student have enrolled");
 		} else {
 			view.setViewName("ApproveStudent");
@@ -203,4 +218,48 @@ public class Student_service {
 		student_dao.save(student);
 		return view;
 	}
+
+	public ModelAndView error() {
+		ModelAndView view = new ModelAndView("StudentHome");
+		view.addObject("fail", "Fail to register");
+		view.setViewName("student_signup");
+		return view;
+	}
+
+	public ModelAndView verify(Student student, int otp, String email) throws IOException {
+		ModelAndView view = new ModelAndView();
+
+		Student existingStudent = student_dao.fetch(email);
+
+		if (existingStudent != null) {
+			// Get stored OTP
+			OtpDto otpDto = otp_service.getOtp(email);
+
+			if (otpDto != null) {
+				// Check OTP validity and expiry
+				boolean isValid = otp_service.validateOTP(email, otp);
+
+				if (isValid) {
+					view.addObject("student", existingStudent);
+					existingStudent.setOtp(0);
+					existingStudent.setOtpstatus(true);
+					student_dao.save(existingStudent);
+					mail.sendWelcomeMail(existingStudent);
+					view.setViewName("studentlogin");
+					view.addObject("success", "Student Account created Success");
+				} else {
+					view.setViewName("otp_verification");
+					view.addObject("fail", "Invalid or Expired OTP entered");
+				}
+			} else {
+				view.setViewName("otp_verification");
+				view.addObject("fail", "No OTP found for the given email");
+			}
+		} else {
+			view.setViewName("student_signup");
+			view.addObject("fail", "Student with email not found");
+		}
+		return view;
+	}
+
 }

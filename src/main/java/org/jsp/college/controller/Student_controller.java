@@ -1,12 +1,14 @@
 package org.jsp.college.controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.time.LocalDateTime;
 
 import org.jsp.college.dao.Course_dao;
-import org.jsp.college.dto.Stream_dto;
+import org.jsp.college.dto.OtpDto;
 import org.jsp.college.dto.Student;
 import org.jsp.college.helper.Login;
+import org.jsp.college.helper.OTPService;
+import org.jsp.college.helper.SendMail;
 import org.jsp.college.service.Student_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,23 +31,46 @@ public class Student_controller {
 	Student_service student_service;
 	@Autowired
 	Course_dao course_service;
+	@Autowired
+	SendMail mail;
+	@Autowired
+	OTPService otp_service;
 
 	@PostMapping("signup")
 	public ModelAndView signup(@ModelAttribute Student student, @RequestParam String date,
 			@RequestParam MultipartFile photo) throws IOException {
-		return student_service.signup(student, date,photo);
+		// Generate an OTP and create an OtpDto object
+		OtpDto otpDto = otp_service.createAndSaveOTP(student.getEmail());
+
+		// Send the OTP to the user's email
+		mail.send(student.getEmail(), otpDto, student);
+
+		// Sign up the student and return the result
+		return student_service.signup(student, date, photo, otpDto.getOtp());
+	}
+
+	@PostMapping("validotp")
+	public ModelAndView otp(@RequestParam int otp, @RequestParam String email, Student student) throws IOException {
+//	    student.setEmail(email); // Setting the email to your student object
+//	    System.out.println(otp);
+		return student_service.verify(student, otp, email);
 	}
 
 	@PostMapping("login")
-	public ModelAndView login(@ModelAttribute Login login, HttpSession session) {
+	public ModelAndView login(@ModelAttribute Login login, HttpSession session) throws IOException {
 		return student_service.login(login, session);
 	}
+	
+//	@PostMapping("login_verify")
+//		public ModelAndView verify_otp() {
+//			
+//		}
+	
 
 	@GetMapping("course")
 	public ModelAndView fetchStaff() {
 		return student_service.fetchCourse();
 	}
-
 
 	@PostMapping("enroll")
 	public ModelAndView enroll(@RequestParam String course, @RequestParam String stream, HttpSession session) {

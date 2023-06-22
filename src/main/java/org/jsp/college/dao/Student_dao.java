@@ -35,7 +35,10 @@ public class Student_dao {
 	public List<Student> fetchAllApprovedStudents() {
 		return student_repository.fetchAllApprovedStudents();
 	}
-
+	
+	public List<Student> fetchall(){
+		return student_repository.findAll();
+	}
 	public Student fetch(int id) {
 		Optional<Student> optional = student_repository.findById(id);
 		if (optional.isPresent())

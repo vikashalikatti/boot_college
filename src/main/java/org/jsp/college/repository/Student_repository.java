@@ -12,7 +12,7 @@ public interface Student_repository extends JpaRepository<Student, Integer> {
 
 	Student findByMobile(long mobile);
 
-	@Query("select x from Student x where status=true and doj=null")
+	@Query("select x from Student x where status=true and doj=null and otpstatus=true")
 	List<Student> fetchAllApprovedStudents();
 
 }

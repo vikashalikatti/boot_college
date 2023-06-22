@@ -38,7 +38,7 @@ public class Course_service {
 
 	public ModelAndView add_course(Course course) {
 
-		ModelAndView andView = new ModelAndView("home");
+		ModelAndView andView = new ModelAndView("Admin_Home");
 		Course course2 = course_dao.fetch(course.getName());
 		if (course2 == null) {
 			course_dao.add(course);

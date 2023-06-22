@@ -33,7 +33,8 @@ public class Student {
 	private double sslc;
 	private double puc;
 	private String quota;
-
+	private int otp;
+	private boolean otpstatus;
 	@Lob
 	@Column(columnDefinition = "MEDIUMBLOB")
 	private byte[] picture;

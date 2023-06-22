@@ -9,6 +9,7 @@
 		<version>3.1.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+	<packaging>jar</packaging>
 	<groupId>org.jsp</groupId>
 	<artifactId>college</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -92,6 +93,13 @@
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 			<version>2.7.2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>9.7.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
