@@ -55,11 +55,11 @@ public class Staff_Service {
 			view.addObject("fail", "Email Wrong");
 		} else {
 			if (login.getPassword().equals(staff.getPassword())) {
-				if(staff.isStatus()) {
-				session.setAttribute("staff", staff);
-				view.setViewName("StaffHome");
-				view.addObject("success", "Login Success");
-				}else {
+				if (staff.isStatus()) {
+					session.setAttribute("staff", staff);
+					view.setViewName("StaffHome");
+					view.addObject("success", "Login Success");
+				} else {
 					view.setViewName("StaffLogin");
 					view.addObject("fail", "Wait for Admins Approval");
 				}

@@ -22,20 +22,24 @@
 	<br> <input type="submit" value="Validate">
 </form>
 
-<%
-	if (request.getAttribute("success") != null) {
-	%>
-	<p style="color: green;"><%=request.getAttribute("success")%></p>
-	<%
-	}
-	%>
+<h1 id="successMessage" style="color:green">${success}</h1>
+<h1 id="failMessage" style="color:red">${fail}</h1>
+</body>	
+<script>
+    // Get the success and fail message elements
+    var successMessage = document.getElementById("successMessage");
+    var failMessage = document.getElementById("failMessage");
 
-	<%
-	if (request.getAttribute("fail") != null) {
-	%>
-	<p style="color: red;"><%=request.getAttribute("fail")%></p>
-	<%
-	}
-	%>
-</body>
+    // Check if the success message exists and display it as a pop-up alert
+    if (successMessage.innerText !== "") {
+        window.alert(successMessage.innerText);
+        successMessage.style.display = "none"; // Hide the success message element
+    }
+
+    // Check if the fail message exists and display it as a pop-up alert
+    if (failMessage.innerText !== "") {
+        window.alert(failMessage.innerText);
+        failMessage.style.display = "none"; // Hide the fail message element
+    }
+</script>
 </html>

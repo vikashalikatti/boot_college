@@ -50,8 +50,7 @@ button[type="submit"]:hover, button[type="reset"]:hover, button:hover {
 </style>
 </head>
 <body>
-<h1>${success}</h1>
-<h1>${fail}</h1>
+
 <h1>Enter Course Details</h1>
 <form action="/admin/course" method="post">
     <label for="name">Course Name:</label><br>
@@ -65,5 +64,24 @@ button[type="submit"]:hover, button[type="reset"]:hover, button:hover {
 </form>
 <br>
 <a href="/"><button>Home</button></a>
-</body>
+<h1 id="successMessage" style="color:green">${success}</h1>
+<h1 id="failMessage" style="color:red">${fail}</h1>
+</body>	
+<script>
+    // Get the success and fail message elements
+    var successMessage = document.getElementById("successMessage");
+    var failMessage = document.getElementById("failMessage");
+
+    // Check if the success message exists and display it as a pop-up alert
+    if (successMessage.innerText !== "") {
+        window.alert(successMessage.innerText);
+        successMessage.style.display = "none"; // Hide the success message element
+    }
+
+    // Check if the fail message exists and display it as a pop-up alert
+    if (failMessage.innerText !== "") {
+        window.alert(failMessage.innerText);
+        failMessage.style.display = "none"; // Hide the fail message element
+    }
+</script>
 </html>

@@ -85,10 +85,16 @@ p {
 </style>
 </head>
 <body>
+
+	<%
+	Faculty faculty = (Faculty) session.getAttribute("faculty");
+	if (faculty == null) {
+		request.setAttribute("fail", "Please Login Again");
+		request.getRequestDispatcher("FacultyLogin.jsp").include(request, response);
+	} else {
+	%>
 	<%
 	if (session.getAttribute("faculty") != null) {
-		Faculty faculty = (Faculty) session.getAttribute("faculty");
-
 		// Generate QR code using name and DOB
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(faculty.getName() + faculty.getDob(), BarcodeFormat.QR_CODE, 200, 200);
@@ -115,7 +121,7 @@ p {
 			</div>
 			<hr>
 			<p>
-				<strong>Office</strong>Dr. Rajkumar Road, 
+				<strong>Office</strong>Dr. Rajkumar Road,
 			<p>
 			<p>
 				Rajajinagar 3rd block, Bengaluru, India <strong>560001</strong>
@@ -129,9 +135,29 @@ p {
 	<h1>No faculty details found.</h1>
 	<%
 	}
+	}
 	%>
 	<center>
-	<a href="FacultyHome.jsp"><button class="button">Back</button></a>
+		<a href="FacultyHome.jsp"><button class="button">Back</button></a>
 	</center>
-</body>
+<h1 id="successMessage" style="color:green">${success}</h1>
+<h1 id="failMessage" style="color:red">${fail}</h1>
+</body>	
+<script>
+    // Get the success and fail message elements
+    var successMessage = document.getElementById("successMessage");
+    var failMessage = document.getElementById("failMessage");
+
+    // Check if the success message exists and display it as a pop-up alert
+    if (successMessage.innerText !== "") {
+        window.alert(successMessage.innerText);
+        successMessage.style.display = "none"; // Hide the success message element
+    }
+
+    // Check if the fail message exists and display it as a pop-up alert
+    if (failMessage.innerText !== "") {
+        window.alert(failMessage.innerText);
+        failMessage.style.display = "none"; // Hide the fail message element
+    }
+</script>
 </html>

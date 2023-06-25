@@ -10,7 +10,6 @@ import java.util.List;
 import org.jsp.college.dao.FacultyDao;
 import org.jsp.college.dto.Faculty;
 import org.jsp.college.helper.Login;
-import org.jsp.college.helper.SendMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,8 +21,6 @@ import jakarta.servlet.http.HttpSession;
 public class FacultyService {
 	@Autowired
 	FacultyDao facultyDao;
-	
-	
 
 	public ModelAndView login(Login login, HttpSession session) {
 		ModelAndView view = new ModelAndView();
@@ -34,12 +31,12 @@ public class FacultyService {
 			view.addObject("fail", "Email Wrong");
 		} else {
 			if (login.getPassword().equals(faculty.getPassword())) {
-				if(faculty.isStatus()) {
-				session.setAttribute("faculty", faculty);
-				
-				view.setViewName("FacultyHome");
-				view.addObject("success", "Login Success");
-				}else {
+				if (faculty.isStatus()) {
+					session.setAttribute("faculty", faculty);
+
+					view.setViewName("FacultyHome");
+					view.addObject("success", "Login Success");
+				} else {
 					view.setViewName("FacultyLogin");
 					view.addObject("fail", "Wait for Admins Approval");
 				}

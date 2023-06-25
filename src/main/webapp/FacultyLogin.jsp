@@ -29,10 +29,7 @@ form {
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
 
-h1 {
-    text-align: center;
-    animation: pulse 2s infinite;
-}
+
 
 input[type="text"], input[type="password"] {
     width: 90%;
@@ -86,22 +83,12 @@ a button:hover {
     100% { transform: scale(1); }
 }
 
-.shake {
-    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-}
-
-@keyframes shake {
-    10%, 90% { transform: translate3d(-1px, 0, 0); }
-    20%, 80% { transform: translate3d(2px, 0, 0); }
-    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-    40%, 60% { transform: translate3d(4px, 0, 0); }
-}
 </style>
 </head>
 <body>
 <form action="/faculty/login" method="post" id="loginForm">
-    <h1 style="color:green">${success}</h1>
-    <h1 style="color:red">${fail}</h1>
+    <h1 id="successMessage" style="color:green">${success}</h1>
+<h1 id="failMessage" style="color:red">${fail}</h1>
     Email:<input type="text" name="email" placeholder="Enter email" required="required">
     Password:<input type="password" name="password" placeholder="Enter password" required="required">
     <button type="submit">Login</button>
@@ -109,13 +96,25 @@ a button:hover {
     <a href="/FacultySignup.jsp"><button type="button">New? Click here to Create an Account</button></a>
     <a href="/"><button type="button">Home</button></a>
 </form>
-
 <script>
-    let failMessage = '${fail}';
-    if (failMessage) {
-        let loginForm = document.getElementById('loginForm');
-        loginForm.classList.add('shake');
+    // Get the success and fail message elements
+    var successMessage = document.getElementById("successMessage");
+    var failMessage = document.getElementById("failMessage");
+
+    // Check if the success message exists and display it as a pop-up alert
+    if (successMessage.innerText !== "") {
+        window.alert(successMessage.innerText);
+        successMessage.style.display = "none"; // Hide the success message element
+    }
+
+    // Check if the fail message exists and display it as a pop-up alert
+    if (failMessage.innerText !== "") {
+        window.alert(failMessage.innerText);
+        failMessage.style.display = "none"; // Hide the fail message element
     }
 </script>
+
+
+    
 </body>
 </html>

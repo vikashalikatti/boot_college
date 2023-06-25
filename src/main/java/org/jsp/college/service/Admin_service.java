@@ -23,8 +23,9 @@ public class Admin_service {
 
 	public ModelAndView login(Login login, HttpSession session) {
 	    ModelAndView andView = new ModelAndView();
+	    String admin = "admin";
 	    if (login.getEmail().equals("admin") && login.getPassword().equals("admin")) {
-	        session.setAttribute("admin", "admin");
+	        session.setAttribute("admin",admin);
 	        andView.setViewName("Admin_Home");
 	        andView.addObject("success", "Login Success");
 	    } else {

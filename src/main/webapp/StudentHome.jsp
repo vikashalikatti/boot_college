@@ -71,19 +71,16 @@ h1 {
 @keyframes fadeIn { 0% {
 	opacity: 0;
 }
-100%
-{
-opacity:1;}
+100%{opacity:1;
+}
 }
 </style>
 </head>
 <body>
-	<h1>${success}</h1>
-	<h1>${fail}</h1>
 	<%
 	Student student = (Student) session.getAttribute("student");
 	if (student == null) {
-		request.setAttribute("fail", "Invalid Session Login Again");
+		request.setAttribute("fail", "Please Login Again");
 		request.getRequestDispatcher("studentlogin.jsp").forward(request, response);
 	} else {
 	%>
@@ -107,17 +104,39 @@ opacity:1;}
 	}
 	}
 	%>
-	<%if(student.getCourse()!=null && student.getStream()!=null) %>
+	<%
+	if (student.getCourse() != null && student.getStream() != null) {
+	%>
 	<a href="/Student_ID_Card.jsp"
-		class="btn animate__animated animate__swing"><button>View
-			Id Card</button></a>
-	<a class="btn animate__animated animate__swing"><button>View
-			Library Card</button></a>
-	<a class="btn animate__animated animate__swing"><button>View
-			TimeTable</button></a>
-	
+		class="btn animate__animated animate__swing">View
+			Id Card</a>
+	<a class="btn animate__animated animate__swing">View
+			Library Card</a>
+	<%
+	}
+	%>	
 	<a href="/logout" class="btn animate__animated animate__tada">Logout</a>
-	
-	<%}%>
-</body>
+	<%
+	}
+	%>
+<h1 id="successMessage" style="color:green">${success}</h1>
+<h1 id="failMessage" style="color:red">${fail}</h1>
+</body>	
+<script>
+    // Get the success and fail message elements
+    var successMessage = document.getElementById("successMessage");
+    var failMessage = document.getElementById("failMessage");
+
+    // Check if the success message exists and display it as a pop-up alert
+    if (successMessage.innerText !== "") {
+        window.alert(successMessage.innerText);
+        successMessage.style.display = "none"; // Hide the success message element
+    }
+
+    // Check if the fail message exists and display it as a pop-up alert
+    if (failMessage.innerText !== "") {
+        window.alert(failMessage.innerText);
+        failMessage.style.display = "none"; // Hide the fail message element
+    }
+</script>
 </html>
