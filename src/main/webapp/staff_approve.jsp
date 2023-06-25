@@ -11,6 +11,13 @@
 </head>
 <body>
 	<%
+	String email = (String) session.getAttribute("admin");
+	if (email == null) {
+		request.setAttribute("fail", "Please Login Again");
+		request.getRequestDispatcher("admin_login.jsp").include(request, response);
+	} else {
+	%>
+	<%
 	List<Staff> list = (List<Staff>) request.getAttribute("list");
 	%>
 	<table border="1">
@@ -32,7 +39,7 @@
 			<th><%=staff.getAge()%></th>
 			<th><%=staff.isStatus()%></th>
 			<form method="post" action="/Staff/change/<%=staff.getId()%>">
-			<th><button>Change</button></th>
+				<th><button>Change</button></th>
 			</form>
 		</tr>
 		<%
@@ -40,5 +47,8 @@
 		%>
 	</table>
 	<a href="/Admin_Home.jsp"><button type="button">Back</button></a>
+	<%
+	}
+	%>
 </body>
 </html>

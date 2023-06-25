@@ -67,6 +67,12 @@ button[type="submit"]:hover, button[type="reset"]:hover, button:hover {
 </style>
 </head>
 <body>
+<%String email =(String) session.getAttribute("admin"); 
+if(email==null){
+	request.setAttribute("fail", "Please Login Again");
+	request.getRequestDispatcher("admin_login.jsp").include(request, response);
+}else{	
+%>
 <div class="container">
 
 <h1>Enter Stream Details</h1>
@@ -114,4 +120,5 @@ button[type="submit"]:hover, button[type="reset"]:hover, button:hover {
         failMessage.style.display = "none"; // Hide the fail message element
     }
 </script>
+<%} %>
 </html>

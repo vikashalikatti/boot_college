@@ -28,38 +28,38 @@ public class Admin_controller {
 	@Autowired
 	Student_service student_service;
 
-	@PostMapping("login")
+	@PostMapping("/login")
 	public ModelAndView login(@ModelAttribute Login login, HttpSession session) {
 		return admin_service.login(login, session);
 	}
 
-	@PostMapping("course")
+	@PostMapping("/course")
 	public ModelAndView add_course(@ModelAttribute Course course) {
 		return course_service.add_course(course);
 	}
 
-	@GetMapping("stream")
+	@GetMapping("/stream")
 	public ModelAndView checkStream() {
 		return course_service.check_course();
 	}
 
-	@PostMapping("stream")
+	@PostMapping("/stream")
 	public ModelAndView savestream(@ModelAttribute Stream_dto stream_dto, @RequestParam String coursename) {
 		return course_service.save_stream(stream_dto, coursename);
 
 	}
 
-	@GetMapping("admission")
+	@GetMapping("/admission")
 	public ModelAndView admission() {
 		return student_service.fetchAllAcceptedStudent();
 	}
 
-	@PostMapping("updateFee/{id}")
+	@PostMapping("/updateFee/{id}")
 	public ModelAndView update_course(@PathVariable int id, @RequestParam double fee) {
 		return course_service.update_course(id, fee);
 	}
 
-	@GetMapping("update_stream")
+	@GetMapping("/update_stream")
 	public ModelAndView update_stream_fee(HttpSession session) {
 		return course_service.fetchAll_stream(session);
 	}

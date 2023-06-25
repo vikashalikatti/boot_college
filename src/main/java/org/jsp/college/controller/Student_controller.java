@@ -36,27 +36,20 @@ public class Student_controller {
 	@Autowired
 	OTPService otp_service;
 
-	@PostMapping("signup")
+	@PostMapping("/signup")
 	public ModelAndView signup(@ModelAttribute Student student, @RequestParam String date,
 			@RequestParam MultipartFile photo) throws IOException {
-		// Generate an OTP and create an OtpDto object
 		OtpDto otpDto = otp_service.createAndSaveOTP(student.getEmail());
-
-		// Send the OTP to the user's email
 		mail.send(student.getEmail(), otpDto, student);
-
-		// Sign up the student and return the result
 		return student_service.signup(student, date, photo, otpDto.getOtp());
 	}
 
-	@PostMapping("validotp")
+	@PostMapping("/validotp")
 	public ModelAndView otp(@RequestParam int otp, @RequestParam String email, Student student) throws IOException {
-//	    student.setEmail(email); // Setting the email to your student object
-//	    System.out.println(otp);
 		return student_service.verify(student, otp, email);
 	}
 
-	@PostMapping("login")
+	@PostMapping("/login")
 	public ModelAndView login(@ModelAttribute Login login, HttpSession session) throws IOException {
 		return student_service.login(login, session);
 	}
@@ -67,28 +60,35 @@ public class Student_controller {
 //		}
 	
 
-	@GetMapping("course")
+	@GetMapping("/course")
 	public ModelAndView fetchStaff() {
 		return student_service.fetchCourse();
 	}
 
-	@PostMapping("enroll")
+	@PostMapping("/enroll")
 	public ModelAndView enroll(@RequestParam String course, @RequestParam String stream, HttpSession session) {
 		return student_service.enroll(course, stream, session);
 	}
 
-	@GetMapping("accept")
+	@GetMapping("/accept")
 	public ModelAndView accept(HttpSession session) {
 		return student_service.accept(session);
 	}
 
-	@GetMapping("reject")
+	@GetMapping("/reject")
 	public ModelAndView reject(HttpSession session) {
 		return student_service.reject(session);
 	}
 
-	@GetMapping("approve/{id}")
+	@GetMapping("/approve/{id}")
 	public ModelAndView approve(@PathVariable int id) {
 		return student_service.approveStudent(id);
+	}
+	
+	@GetMapping("/resend/{email}")
+	public ModelAndView resend(Student student,@PathVariable String email) {
+		OtpDto otpDto = otp_service.createAndSaveOTP(student.getEmail());
+		mail.send(student.getEmail(), otpDto, student);
+		return student_service.resend(student,otpDto.getOtp(),email);
 	}
 }

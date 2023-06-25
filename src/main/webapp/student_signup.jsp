@@ -32,7 +32,7 @@
 			id="photo" name="photo" accept="image/*" required><br>
 		<button type="submit">Signup</button>
 		<button type="reset">Cancel</button>
-		<a href="/StudentLogin.jsp"><button type="button">Back</button></a>
+		<a href="/studentlogin.jsp"><button type="button">Back</button></a>
 	</form>
 	<br>
 <h1 id="successMessage" style="color:green">${success}</h1>

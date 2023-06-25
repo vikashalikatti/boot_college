@@ -50,7 +50,12 @@ button[type="submit"]:hover, button[type="reset"]:hover, button:hover {
 </style>
 </head>
 <body>
-
+<%String email =(String) session.getAttribute("admin"); 
+if(email==null){
+	request.setAttribute("fail", "Please Login Again");
+	request.getRequestDispatcher("admin_login.jsp").include(request, response);
+}else{	
+%>
 <h1>Enter Course Details</h1>
 <form action="/admin/course" method="post">
     <label for="name">Course Name:</label><br>
@@ -84,4 +89,5 @@ button[type="submit"]:hover, button[type="reset"]:hover, button:hover {
         failMessage.style.display = "none"; // Hide the fail message element
     }
 </script>
+<%}%>
 </html>

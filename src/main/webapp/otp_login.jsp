@@ -6,16 +6,6 @@
 <meta charset="ISO-8859-1">
 <title>OTP Login</title>
 <link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
-<style>
-<!--
-your
- 
-styles
- 
-here
- 
--->
-</style>
 </head>
 <body>
 	<div class="container">

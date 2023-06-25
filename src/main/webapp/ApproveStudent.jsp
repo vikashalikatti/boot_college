@@ -10,6 +10,12 @@
 <link rel="icon" href="assets/images/JSP.ico" type="image/x-icon">
 <title>Approve Student</title>
 </head>
+<%String email =(String) session.getAttribute("admin"); 
+if(email==null){
+	request.setAttribute("fail", "Please Login Again");
+	request.getRequestDispatcher("admin_login.jsp").include(request, response);
+}else{	
+%>
 <body>
 	<%
 	List<Student> list = (List<Student>) request.getAttribute("students");
@@ -60,4 +66,5 @@
         failMessage.style.display = "none"; // Hide the fail message element
     }
 </script>
+<%} %>
 </html>

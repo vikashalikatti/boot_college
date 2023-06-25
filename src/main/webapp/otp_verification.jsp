@@ -10,16 +10,16 @@
 <title>OTP Validation</title>
 </head>
 <body>
-<%Student_dao dao = new Student_dao(); %>
 <% String email = (String) request.getAttribute("email"); %>
 
 <h2>OTP Validation for <%= email %></h2>
-<form action="validotp" method="post">
+<form action="/student/validotp" method="post">
         <label for="email">Email:</label><br> <input type="text"
                 id="email" name="email" value="<%= email %>" readonly><br>
 	<label for="otp">Enter OTP:</label><br> <input type="number"
 		id="otp" name="otp" required><br>
 	<br> <input type="submit" value="Validate">
+	<a href="/student/resend/<%=email%>"><button type="button">Resend</button></a>
 </form>
 
 <h1 id="successMessage" style="color:green">${success}</h1>

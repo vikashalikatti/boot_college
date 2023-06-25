@@ -33,6 +33,14 @@ public class Student_service {
 	SendMail mail;
 	@Autowired
 	OTPService otp_service;
+	
+	
+	public ModelAndView resend(Student student, int otp, String email) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("otp_verification");
+		view.addObject("success", "OTP sent to email. Please enter it to continue.");
+		return view;
+	}
 
 	public ModelAndView signup(Student student, String date, MultipartFile pic, int otp) throws IOException {
 		ModelAndView view = new ModelAndView();
@@ -69,7 +77,10 @@ public class Student_service {
 
 	public ModelAndView login(Login login, HttpSession session) throws IOException {
 		ModelAndView view = new ModelAndView();
-		Student student = student_dao.fetch(login.getEmail());
+		String email = login.getEmail();
+//		System.out.println(email);
+		Student student = student_dao.fetch(email);
+//		System.out.println(student);
 		if (student == null) {
 			view.setViewName("studentlogin");
 			view.addObject("fail", "Email Wrong");
@@ -81,7 +92,10 @@ public class Student_service {
 					view.setViewName("StudentHome");
 					view.addObject("success", "Login Success");
 				} else {
-					view.setViewName("studentlogin");
+					view.addObject("email", email);       
+					OtpDto otpDto = otp_service.createAndSaveOTP(email);
+					mail.send(student.getEmail(), otpDto, student);
+					view.setViewName("otp_verification");
 					view.addObject("fail", "pleaze verify the email address");
 				}
 			} else {
@@ -89,7 +103,6 @@ public class Student_service {
 				view.addObject("fail", "Password Wrong");
 			}
 		}
-
 		return view;
 	}
 
@@ -261,5 +274,12 @@ public class Student_service {
 		}
 		return view;
 	}
+
+	public Student getStudentByEmail(String email) {
+		  Student student = student_dao.fetch(email);
+		    return student;
+	}
+
+	
 
 }

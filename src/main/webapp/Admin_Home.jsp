@@ -8,7 +8,12 @@
 <title>Admin Home</title>
 </head>
 <body>
-	
+	<%String email =(String) session.getAttribute("admin"); 
+if(email==null){
+	request.setAttribute("fail", "Please Login Again");
+	request.getRequestDispatcher("admin_login.jsp").include(request, response);
+}else{	
+%>
 	<h1>Admin Home Page</h1>
 	<a href="/Add_course.jsp"><button>Add Course</button></a>
 	<a href="/admin/stream"><button>Add Stream</button></a>
@@ -37,4 +42,5 @@
         failMessage.style.display = "none"; // Hide the fail message element
     }
 </script>
+<%} %>
 </html>

@@ -2,6 +2,8 @@ package org.jsp.college.helper;
 
 import org.springframework.stereotype.Service;
 import org.jsp.college.dto.OtpDto;
+import org.jsp.college.dto.Student;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.time.LocalDateTime;
@@ -59,4 +61,14 @@ public class OTPService {
 
 		return otpDto;
 	}
+
+	public OtpDto createAndSaveOTP(Student student) {
+	    int otp = generateOTP();
+	    LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(5);
+	    OtpDto otpDto = new OtpDto(otp, expiryTime);
+	    otpStorage.put(student.getEmail(), otpDto);
+
+	    return otpDto;
+	}
+
 }
